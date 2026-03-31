@@ -1,4 +1,4 @@
-name: Selenium CI
+name: Selenium CI Matrix
 
 on:
   push:
@@ -9,6 +9,11 @@ on:
 jobs:
   run-selenium-tests:
     runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, firefox]
 
     steps:
       - name: Checkout source code
@@ -21,13 +26,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
-      - name: Run Selenium smoke tests
-        run: mvn clean test "-Dbrowser=chrome" "-DsuiteXmlFile=testng-smoke.xml"
+      - name: Run Selenium tests on ${{ matrix.browser }}
+        run: mvn clean test "-Dbrowser=${{ matrix.browser }}" "-DsuiteXmlFile=testng-smoke.xml"
 
-      - name: Upload test artifacts when failed
-        if: failure()
+      - name: Upload artifact for ${{ matrix.browser }}
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: failed-test-artifacts
-          path: |
-            target/
+          name: test-results-${{ matrix.browser }}
+          path: target/

@@ -16,9 +16,10 @@ public class GoogleTest {
         driver.get("https://www.google.com");
 
         String title = driver.getTitle();
-        System.out.println("Page title: " + title);
+        System.out.println("Title: " + title);
 
-        Assert.assertTrue(title.contains("ABC"));
+        Assert.assertTrue(title.contains("Google"));
+
         driver.quit();
     }
 }
