@@ -1,9 +1,10 @@
 package com.example.tests;
 
-import com.example.drivers.DriverFactory;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.example.drivers.DriverFactory;
 
 public class GoogleTest {
 
@@ -17,8 +18,7 @@ public class GoogleTest {
         String title = driver.getTitle();
         System.out.println("Page title: " + title);
 
-        Assert.assertTrue(title.contains("Google"));
-
+        Assert.assertTrue(title.contains("ABC"));
         driver.quit();
     }
 }
