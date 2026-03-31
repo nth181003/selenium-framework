@@ -26,8 +26,17 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Show masked secret
+        run: echo $APP_PASSWORD
+        shell: bash
+        env:
+          APP_PASSWORD: ${{ secrets.SAUCEDEMO_PASSWORD }}
+
       - name: Run Selenium tests on ${{ matrix.browser }}
         run: mvn clean test "-Dbrowser=${{ matrix.browser }}" "-DsuiteXmlFile=testng-smoke.xml"
+        env:
+          APP_USERNAME: ${{ secrets.SAUCEDEMO_USERNAME }}
+          APP_PASSWORD: ${{ secrets.SAUCEDEMO_PASSWORD }}
 
       - name: Upload artifact for ${{ matrix.browser }}
         if: always()

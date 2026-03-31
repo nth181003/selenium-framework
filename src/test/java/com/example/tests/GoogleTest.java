@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.example.drivers.DriverFactory;
+import com.example.utils.ConfigReader;
 
 public class GoogleTest {
 
@@ -12,6 +13,12 @@ public class GoogleTest {
     public void testGoogleTitle() {
         String browser = System.getProperty("browser", "chrome");
         WebDriver driver = DriverFactory.createDriver(browser);
+
+        String username = ConfigReader.getUsername();
+        String password = ConfigReader.getPassword();
+
+        System.out.println("Username loaded: " + username);
+        System.out.println("Password loaded successfully: " + (password != null && !password.isBlank()));
 
         driver.get("https://www.google.com");
 
